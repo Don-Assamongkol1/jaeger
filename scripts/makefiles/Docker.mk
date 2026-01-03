@@ -3,7 +3,8 @@
 
 DOCKER_NAMESPACE ?= jaegertracing
 DOCKER_TAG       ?= latest
-DOCKER_REGISTRY  ?= localhost:5000
+REGISTRY_PORT    ?= 5000
+DOCKER_REGISTRY  ?= localhost:$(REGISTRY_PORT)
 BASE_IMAGE       ?= $(DOCKER_REGISTRY)/baseimg_alpine:latest
 DEBUG_IMAGE      ?= $(DOCKER_REGISTRY)/debugimg_alpine:latest
 
@@ -34,7 +35,7 @@ create-fake-debugimg: prepare-docker-buildx
 prepare-docker-buildx:
 	@echo "::group:: prepare-docker-buildx"
 	docker buildx inspect jaeger-build > /dev/null || docker buildx create --use --name=jaeger-build --buildkitd-flags="--allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host" --driver-opt="network=host"
-	docker inspect registry > /dev/null || docker run --rm -d -p 5000:5000 --name registry registry:2
+	docker inspect registry > /dev/null || docker run --rm -d -p $(REGISTRY_PORT):5000 --name registry registry:2
 	@echo "::endgroup::"
 
 .PHONY: clean-docker-buildx
