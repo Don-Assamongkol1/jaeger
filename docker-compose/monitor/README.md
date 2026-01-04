@@ -337,7 +337,7 @@ If the `groupByOperation=true` parameter is set, the response will include the o
 
 As this is feature is opt-in only, disabling metrics querying simply involves omitting the `METRICS_STORAGE_TYPE` environment variable when starting-up jaeger-query or jaeger all-in-one.
 
-For example, try removing the `METRICS_STORAGE_TYPE=prometheus` environment variable from the [docker-compose.yml](./docker-compose.yml) file.
+For example, try removing the `METRICS_STORAGE_TYPE=prometheus` environment variable from the [docker-compose-v1.yml](./docker-compose-v1.yml) file.
 
 Then querying any metrics endpoints results in an error message:
 
